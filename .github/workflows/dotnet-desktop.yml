@@ -28,6 +28,11 @@ jobs:
       with:
         name: Win64
         path: .\bin\Release\net6.0\publish\
+        
+    - name: Create and Zip Folder
+      shell: pwsh
+      run: |
+        Compress-Archive -Path .\bin\Release\net6.0\publish\ -DestinationPath windows.zip
 
     - name: Set outputs
       shell: bash
@@ -51,6 +56,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./bin/Release/net6.0/publish/  # Specify the path to the folder containing release assets
+        asset_path: windows.zip  # Specify the path to the folder containing release assets
         asset_name: windows.zip  # Specify the name of the release assets file
         asset_content_type: application/zip
