@@ -28,10 +28,6 @@ jobs:
       with:
         name: Win64
         path: .\bin\Release\net6.0\publish\
-    
-    - name: Zip artifacts
-      run: |
-        cd .\bin\Release\net6.0\publish\ && zip -r ../../../../audiooccludgen-windows.zip .
 
     - name: Set outputs
       id: vars
@@ -46,15 +42,17 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.vars.outputs.sha_short }}
-        release_name: Release @${{ steps.vars.outputs.sha_short }}
+        tag_name: ${{ steps.vars.outputs.sha_short }}  # Specify the desired tag for the release
+        release_name: ${{ steps.vars.outputs.sha_short }}  # Specify the release name
+        draft: false
+        prerelease: false
 
-    - name: Upload windows artifacts
+    - name: Upload Release Assets
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./audiooccludgen-windows.zip
-        asset_name: audiooccludgen-windows.zip
+        asset_path: ./bin/Release/net6.0/publish/  # Specify the path to the folder containing release assets
+        asset_name: windows.zip  # Specify the name of the release assets file
         asset_content_type: application/zip
