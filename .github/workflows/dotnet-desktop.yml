@@ -28,3 +28,33 @@ jobs:
       with:
         name: Win64
         path: .\bin\Release\net6.0\publish\
+    
+    - name: Zip artifacts
+      run: |
+        cd .\bin\Release\net6.0\publish\ && zip -r ../../../../audiooccludgen-windows.zip .
+
+    - name: Set outputs
+      id: vars
+      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+    - name: Check outputs
+      run: echo ${{ steps.vars.outputs.sha_short }}
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.vars.outputs.sha_short }}
+        release_name: Release @${{ steps.vars.outputs.sha_short }}
+
+    - name: Upload windows artifacts
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./audiooccludgen-windows.zip
+        asset_name: audiooccludgen-windows.zip
+        asset_content_type: application/zip
