@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "OcclusionGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "int_ballas.ytyp",
+      "workingDirectory": "E:\\Projects\\OcclusionGenerator\\OcclusionGenerator"
+    }
+  }
+}

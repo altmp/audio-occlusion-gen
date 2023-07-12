@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>occgen</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="SharpDX">
+      <HintPath>.\deps\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics">
+      <HintPath>.\deps\SharpDX.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="CodeWalker.Core">
+      <HintPath>.\deps\CodeWalker.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
